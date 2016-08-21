@@ -1,0 +1,97 @@
+{% extends "layout.html" %}
+{% block content %}
+<p class="selector">
+  <select onchange="setDataSet(this.options[this.selectedIndex].value);">
+  <option value="https://s3-us-west-2.amazonaws.com/s.cdpn.io/218423/data1.json">Data Set #1</option>
+  <option value="https://s3-us-west-2.amazonaws.com/s.cdpn.io/218423/data2.json">Data Set #2</option>
+  <option value="https://s3-us-west-2.amazonaws.com/s.cdpn.io/218423/data3.json">Data Set #3</option>
+  </select> &lt; Select a data set
+</p>
+<div id="chartdiv"></div>
+<script type="text/javascript">
+var chart = AmCharts.makeChart("chartdiv", {
+    "type": "serial",
+    "theme": "light",
+    "marginRight":30,
+    "legend": {
+        "equalWidths": false,
+        "periodValueText": "total: [[value.sum]]",
+        "position": "top",
+        "valueAlign": "left",
+        "valueWidth": 100
+    },
+    "dataLoader": {
+      "url": "http://localhost:8080/user/get/76561198067352481"
+    },
+    "graphs": [{
+        "balloonText": "Kills: <b>[[value]]</b></span>",
+        "fillAlphas": 0.6,
+        "hidden": true,
+        "lineAlpha": 0.4,
+        "title": "Kills",
+        "valueField": "kills"
+    }, {
+        "balloonText": "Deaths: <b>[[value]]</b></span>",
+        "fillAlphas": 0.6,
+        "lineAlpha": 0.4,
+        "title": "Deaths",
+        "valueField": "deaths"
+    }, {
+        "balloonText": "Assists: <b>[[value]]</b></span>",
+        "fillAlphas": 0.6,
+        "lineAlpha": 0.4,
+        "title": "Assists",
+        "valueField": "assists"
+    },{
+        "balloonText": "Gold: <b>[[value]]</b></span>",
+        "fillAlphas": 0.6,
+        "lineAlpha": 0.4,
+        "title": "Gold per Min",
+        "valueField": "gold_per_min"
+    },{
+        "balloonText": "XP: <b>[[value]]</b></span>",
+        "fillAlphas": 0.6,
+        "lineAlpha": 0.4,
+        "title": "XP per Min",
+        "valueField": "xp_per_min"
+    },{
+        "balloonText": "Last Hits: <b>[[value]]</b></span>",
+        "fillAlphas": 0.6,
+        "lineAlpha": 0.4,
+        "title": "Last Hits",
+        "valueField": "last_hits"
+    },{
+        "balloonText": "Denies: <b>[[value]]</b></span>",
+        "fillAlphas": 0.6,
+        "lineAlpha": 0.4,
+        "title": "Denies",
+        "valueField": "denies"
+    }],
+    "plotAreaBorderAlpha": 0,
+    "marginTop": 10,
+    "marginLeft": 0,
+    "marginBottom": 0,
+    "chartScrollbar": {},
+    "chartCursor": {
+        "cursorAlpha": 0
+    },
+    "categoryField": "heroname",
+    "categoryAxis": {
+        "startOnAxis": true,
+        "axisColor": "#DADADA",
+        "gridAlpha": 0.07,
+        "title": "Hero Name",
+    },
+    "export": {
+      "enabled": true
+     }
+});
+
+function setDataSet(dataset_url) {
+  AmCharts.loadFile(dataset_url, {}, function(data) {
+    chart.dataProvider = AmCharts.parseJSON(data);
+    chart.validateData();
+  });
+}
+</script>
+{% endblock %}

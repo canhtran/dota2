@@ -1,0 +1,144 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="col-md-3">
+    <div class="form-group">
+        <label for="sel1">Select Player:</label>
+        <select class="form-control" onchange="setDataSet(this.options[this.selectedIndex].value);">
+            {% for item in data %}
+            <option value="/player/get/{{item.steamid}}">{{item.personaname}}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+
+<div class="col-md-3">
+    <form action="/player/add" method="post" id="addPlayer">
+        <div class="form-group">
+            <label for="playersteamid">Add new Players</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="playersteamid" name="playersteamid" placeholder="Player Steam ID">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </span>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="chartdiv"></div>
+
+<br>
+<div class="row">
+    <div class="container">
+        <h3>PLAYER LIST</h3>
+        <br>
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <thead class="thead-inverse">
+                    <tr>
+                        <th>STEAM ID</th>
+                        <th>Name</th>
+                        <th>Avatar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for item in test %}
+                    <tr>
+                        <td>{{item.steamid}}</td>
+                        <td>{{item.personaname}}</td>
+                        <td><img src="{{item.avatarmedium}}"></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+var chart = AmCharts.makeChart("chartdiv", {
+    "type": "serial",
+    "theme": "light",
+    "marginRight":30,
+    "legend": {
+        "equalWidths": false,
+        "periodValueText": "total: [[value.sum]]",
+        "position": "top",
+        "valueAlign": "left",
+        "valueWidth": 100
+    },
+    "dataLoader": {
+      "url": "/player/get/76561198067352481"
+    },
+    "graphs": [{
+        "balloonText": "Kills: <b>[[value]]</b></span>",
+        "fillAlphas": 0.6,
+        "hidden": true,
+        "lineAlpha": 0.4,
+        "title": "Kills",
+        "valueField": "kills"
+    }, {
+        "balloonText": "Deaths: <b>[[value]]</b></span>",
+        "fillAlphas": 0.6,
+        "lineAlpha": 0.4,
+        "title": "Deaths",
+        "valueField": "deaths"
+    }, {
+        "balloonText": "Assists: <b>[[value]]</b></span>",
+        "fillAlphas": 0.6,
+        "lineAlpha": 0.4,
+        "title": "Assists",
+        "valueField": "assists"
+    },{
+        "balloonText": "Gold: <b>[[value]]</b></span>",
+        "fillAlphas": 0.6,
+        "lineAlpha": 0.4,
+        "title": "Gold per Min",
+        "valueField": "gold_per_min"
+    },{
+        "balloonText": "XP: <b>[[value]]</b></span>",
+        "fillAlphas": 0.6,
+        "lineAlpha": 0.4,
+        "title": "XP per Min",
+        "valueField": "xp_per_min"
+    },{
+        "balloonText": "Last Hits: <b>[[value]]</b></span>",
+        "fillAlphas": 0.6,
+        "lineAlpha": 0.4,
+        "title": "Last Hits",
+        "valueField": "last_hits"
+    },{
+        "balloonText": "Denies: <b>[[value]]</b></span>",
+        "fillAlphas": 0.6,
+        "lineAlpha": 0.4,
+        "title": "Denies",
+        "valueField": "denies"
+    }],
+    "plotAreaBorderAlpha": 0,
+    "marginTop": 10,
+    "marginLeft": 0,
+    "marginBottom": 0,
+    "chartScrollbar": {},
+    "chartCursor": {
+        "cursorAlpha": 0
+    },
+    "categoryField": "heroname",
+    "categoryAxis": {
+        "startOnAxis": true,
+        "axisColor": "#DADADA",
+        "gridAlpha": 0.07,
+        "title": "Hero Name",
+    },
+    "export": {
+      "enabled": true
+     }
+});
+
+function setDataSet(dataset_url) {
+  AmCharts.loadFile(dataset_url, {}, function(data) {
+    chart.dataProvider = AmCharts.parseJSON(data);
+    chart.validateData();
+  });
+}
+</script>
+{% endblock %}

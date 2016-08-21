@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content %}
+<table class="table table-striped">
+    <thead class="thead-inverse">
+        <tr>
+        	<th>ID</th>
+          	<th>Name</th>
+          	<th>Detail</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for item in data %}
+        <tr>
+        	<td>{{item.steamid}}</td>
+          	<td>{{item.personaname}}</td>
+          	<td><a target="_blank" href="/user/get/{{item.steamid}}">Link</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
