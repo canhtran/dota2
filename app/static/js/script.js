@@ -3,6 +3,7 @@ $( document ).ready(function(){
         event.preventDefault();
         var postData = $(this).serializeArray();
 	    var formURL = $(this).attr("action");
+        $('body').addClass('loaded');
         $.ajax({
             type:'post',
             url : formURL,
@@ -15,13 +16,3 @@ $( document ).ready(function(){
         });
     });
 });
-
-/* Open */
-function openNav() {
-    document.getElementById("myNav").style.height = "100%";
-}
-
-/* Close */
-function closeNav() {
-    document.getElementById("myNav").style.height = "0%";
-}
