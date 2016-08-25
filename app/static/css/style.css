@@ -98,21 +98,3 @@
 #loader {
     z-index: 1001; /* anything higher than z-index: 1000 of .loader-section */
 }
-/* Loaded */
-/*.loaded #loader-wrapper .loader-section.section-left {*/
-    /*-webkit-transform: translateX(-100%);  !* Chrome, Opera 15+, Safari 3.1+ *!*/
-    /*-ms-transform: translateX(-100%);  !* IE 9 *!*/
-    /*transform: translateX(-100%);  !* Firefox 16+, IE 10+, Opera *!*/
-/*}*/
-
-/*.loaded #loader-wrapper .loader-section.section-right {*/
-    /*-webkit-transform: translateX(100%);  !* Chrome, Opera 15+, Safari 3.1+ *!*/
-    /*-ms-transform: translateX(100%);  !* IE 9 *!*/
-    /*transform: translateX(100%);  !* Firefox 16+, IE 10+, Opera *!*/
-/*}*/
-/*.loaded #loader {*/
-    /*opacity: 0;*/
-/*}*/
-/*.loaded #loader-wrapper {*/
-    /*visibility: hidden;*/
-/*}*/

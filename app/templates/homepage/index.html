@@ -39,6 +39,7 @@
                         <th>STEAM ID</th>
                         <th>Name</th>
                         <th>Avatar</th>
+                        <th>Players Details</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,6 +48,7 @@
                         <td>{{item.steamid}}</td>
                         <td>{{item.personaname}}</td>
                         <td><img src="{{item.avatarmedium}}"></td>
+                        <td><a href="/player/detail/{{item.steamid}}">Link</a></td>
                     </tr>
                 {% endfor %}
                 </tbody>
