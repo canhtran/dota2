@@ -4,6 +4,11 @@
 	font-size	: 11px;
 }
 
+#chartradar {
+    width       : 100%;
+    height      : 400px;
+}
+
 .loaded #loader-wrapper {
     position: fixed;
     top: 0;

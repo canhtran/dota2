@@ -64,7 +64,8 @@ def get(steamid):
         del data
 
     return dumps(chart_data)
-    #
-    # @player.route('/test')
-    # def test():
-    # 	return render_template('player/detail.html')
+
+
+@player.route('/detail/<steamid>')
+def detail(steamid):
+		return render_template('player/detail.html')

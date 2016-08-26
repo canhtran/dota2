@@ -1,97 +1,69 @@
 {% extends "layout.html" %}
 {% block content %}
-<p class="selector">
-  <select onchange="setDataSet(this.options[this.selectedIndex].value);">
-  <option value="https://s3-us-west-2.amazonaws.com/s.cdpn.io/218423/data1.json">Data Set #1</option>
-  <option value="https://s3-us-west-2.amazonaws.com/s.cdpn.io/218423/data2.json">Data Set #2</option>
-  <option value="https://s3-us-west-2.amazonaws.com/s.cdpn.io/218423/data3.json">Data Set #3</option>
-  </select> &lt; Select a data set
-</p>
-<div id="chartdiv"></div>
-<script type="text/javascript">
-var chart = AmCharts.makeChart("chartdiv", {
-    "type": "serial",
-    "theme": "light",
-    "marginRight":30,
-    "legend": {
-        "equalWidths": false,
-        "periodValueText": "total: [[value.sum]]",
-        "position": "top",
-        "valueAlign": "left",
-        "valueWidth": 100
-    },
-    "dataLoader": {
-      "url": "http://localhost:8080/user/get/76561198067352481"
-    },
-    "graphs": [{
-        "balloonText": "Kills: <b>[[value]]</b></span>",
-        "fillAlphas": 0.6,
-        "hidden": true,
-        "lineAlpha": 0.4,
-        "title": "Kills",
-        "valueField": "kills"
-    }, {
-        "balloonText": "Deaths: <b>[[value]]</b></span>",
-        "fillAlphas": 0.6,
-        "lineAlpha": 0.4,
-        "title": "Deaths",
-        "valueField": "deaths"
-    }, {
-        "balloonText": "Assists: <b>[[value]]</b></span>",
-        "fillAlphas": 0.6,
-        "lineAlpha": 0.4,
-        "title": "Assists",
-        "valueField": "assists"
-    },{
-        "balloonText": "Gold: <b>[[value]]</b></span>",
-        "fillAlphas": 0.6,
-        "lineAlpha": 0.4,
-        "title": "Gold per Min",
-        "valueField": "gold_per_min"
-    },{
-        "balloonText": "XP: <b>[[value]]</b></span>",
-        "fillAlphas": 0.6,
-        "lineAlpha": 0.4,
-        "title": "XP per Min",
-        "valueField": "xp_per_min"
-    },{
-        "balloonText": "Last Hits: <b>[[value]]</b></span>",
-        "fillAlphas": 0.6,
-        "lineAlpha": 0.4,
-        "title": "Last Hits",
-        "valueField": "last_hits"
-    },{
-        "balloonText": "Denies: <b>[[value]]</b></span>",
-        "fillAlphas": 0.6,
-        "lineAlpha": 0.4,
-        "title": "Denies",
-        "valueField": "denies"
-    }],
-    "plotAreaBorderAlpha": 0,
-    "marginTop": 10,
-    "marginLeft": 0,
-    "marginBottom": 0,
-    "chartScrollbar": {},
-    "chartCursor": {
-        "cursorAlpha": 0
-    },
-    "categoryField": "heroname",
-    "categoryAxis": {
-        "startOnAxis": true,
-        "axisColor": "#DADADA",
-        "gridAlpha": 0.07,
-        "title": "Hero Name",
-    },
-    "export": {
-      "enabled": true
-     }
-});
+<script src="https://www.amcharts.com/lib/3/radar.js"></script>
+<div class="container">
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <div id="chartradar"></div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <h2>Name</h2>
+                <div class="portfolio-item">
+                    <a href="#">
+                        <img class="img-responsive" src="http://placehold.it/150x150" alt="">
+                    </a>
+                </div>
+                <p>Last Hits: </p>
+                <p>Denies: </p>
+                <p>Gold spent: </p>
+                <p>Avg Level: </p>
+                <p>Kills: </p>
+                <p>Deaths: </p>
+                <p>Assists: </p>
+                <p>Gold per min: </p>
+                <p>XP per min: </p>
+            </div>
+        </div>
+    </div>
+</div>
 
-function setDataSet(dataset_url) {
-  AmCharts.loadFile(dataset_url, {}, function(data) {
-    chart.dataProvider = AmCharts.parseJSON(data);
-    chart.validateData();
-  });
-}
+<script>
+var chart = AmCharts.makeChart( "chartradar", {
+  "type": "radar",
+  "theme": "light",
+  "dataProvider": [ {
+        "skill": "Fighting",
+        "litres": 156.9
+      }, {
+        "skill": "Farming",
+        "litres": 131.1
+      }, {
+        "skill": "Supporting",
+        "litres": 115.8
+      }, {
+        "skill": "Pushing",
+        "litres": 109.9
+      }, {
+        "skill": "Versatility",
+        "litres": 108.3
+      } ],
+  "valueAxes": [ {
+    "axisTitleOffset": 20,
+    "minimum": 0,
+    "axisAlpha": 0.15
+  } ],
+  "startDuration": 2,
+  "graphs": [ {
+    "balloonText": "[[value]]",
+    "bullet": "round",
+    "lineThickness": 2,
+    "valueField": "litres"
+  } ],
+  "categoryField": "skill",
+  "export": {
+    "enabled": true
+  }
+} );
 </script>
 {% endblock %}
