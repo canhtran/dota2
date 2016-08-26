@@ -103,3 +103,8 @@
 #loader {
     z-index: 1001; /* anything higher than z-index: 1000 of .loader-section */
 }
+
+img.hero-avatar {
+    width: 150px;
+    height: 150px;
+}
