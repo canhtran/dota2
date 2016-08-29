@@ -112,6 +112,10 @@ img.hero-avatar {
 .portfolio-item {
     padding-bottom: 20px;
 }
+.portfolio-item img {
+    width: 100px;
+    height: 100px;
+}
 
 .heroes {
     padding-top: 10px;

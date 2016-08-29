@@ -72,4 +72,4 @@ def detail(steamid):
     query = {'steamid': str(steamid)}
     player_performance = db.load_match('Dota2API', 'player_performance', projection, query)
     player_info = db.load_mongo('Dota2API', 'player_information', query)
-    return render_template('player/detail.html')
+    return render_template('player/detail.html', info = player_info)
