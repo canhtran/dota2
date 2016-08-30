@@ -19,7 +19,6 @@ def index():
 
 @player.route('/add', methods=['POST'])
 def add():
-    # account_id = 76561198067352481
     account_id = request.form['playersteamid']
     account32 = util.convertSteamAccount(account_id)
     player_info = dota2api.get_player_summaries(int(account_id))
