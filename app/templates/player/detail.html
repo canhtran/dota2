@@ -8,10 +8,12 @@
         </div>
         <div class="col-md-6">
             <div class="row">
-                <h2>Name</h2>
+                {% for item in info %}
+                <h2>{{item.personaname}}</h2>
                 <div class="portfolio-item">
-                    <img class="img-responsive" src="http://placehold.it/150x150" alt="">
+                    <img class="img-responsive" src="{{item.avatarfull}}" alt="">
                 </div>
+                {% endfor %}
                 <p>Last Hits: </p>
                 <p>Denies: </p>
                 <p>Gold spent: </p>

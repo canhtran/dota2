@@ -46,10 +46,10 @@ def add():
 def get(steamid):
     projection = {"match": 1, "_id": 0}
     query = {'steamid': str(steamid)}
-    player_details = db.load_match('Dota2API', 'player_performance', projection, query)
-    player_details = player_details[0]['match']
+    player_performance = db.load_match('Dota2API', 'player_performance', projection, query)
+    player_performance = player_performance[0]['match']
     chart_data = []
-    for i in player_details:
+    for i in player_performance:
         data = {}
         data['kills'] = i['kills']
         data['assists'] = i['assists']
@@ -67,4 +67,8 @@ def get(steamid):
 
 @player.route('/detail/<steamid>')
 def detail(steamid):
-		return render_template('player/detail.html')
+    projection = {"match": 1, "_id": 0}
+    query = {'steamid': str(steamid)}
+    player_performance = db.load_match('Dota2API', 'player_performance', projection, query)
+    player_info = db.load_mongo('Dota2API', 'player_information', query)
+    return render_template('player/detail.html', info = player_info)
