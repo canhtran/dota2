@@ -9,8 +9,11 @@ $( document ).ready(function(){
             url : formURL,
             data: postData,
             success: function(result) {
-                if (result = 'done') {
+                if (result == 'done') {
                     window.location.href = "/";
+                } else {
+                    $('body').removeClass('loaded');
+                    alert(result);
                 }
             },
         });

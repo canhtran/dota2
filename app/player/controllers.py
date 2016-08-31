@@ -8,7 +8,7 @@ from bson.json_util import dumps
 
 player = Blueprint('player', __name__, url_prefix='/player')
 
-dota2api = dota2api.Initialise(config.STEAM_KEY)
+api = dota2api.Initialise(config.STEAM_KEY)
 
 
 @player.route('/')
@@ -17,30 +17,32 @@ def index():
     return render_template("player/index.html", data=list_player)
 
 
-@player.route('/add', methods=['POST'])
+@player.route('/add', methods=['POST', 'GET'])
 def add():
     account_id = request.form['playersteamid']
+    print(account_id)
     account32 = util.convertSteamAccount(account_id)
-    player_info = dota2api.get_player_summaries(int(account_id))
-    history = dota2api.get_match_history(account_id)
-    first20 = history['matches'][:20]
+    player_info = api.get_player_summaries(int(account_id))
 
-    match20 = []
-    for match in first20:
-        match = dota2api.get_match_details(match['match_id'])
-        match_player = [x for x in match['players'] if x['account_id'] == account32][0]
-        match20.append(match_player)
+    try:
+        history = api.get_match_history(account_id)
+        first20 = history['matches'][:20]
+        match20 = []
+        for match in first20:
+            match = api.get_match_details(match['match_id'])
+            match_player = [x for x in match['players'] if x['account_id'] == account32][0]
+            match20.append(match_player)
 
-    player_performance = {}
-    player_performance['steamid'] = str(account_id)
-    player_performance['match'] = match20
+        player_performance = {}
+        player_performance['steamid'] = str(account_id)
+        player_performance['match'] = match20
 
-    # Save to Database
-    re1 = db.save_line_by_line('Dota2API', player_performance, 'player_performance')
-    re2 = db.save_line_by_line('Dota2API', player_info['players'][0], 'player_information')
-
-    return 'done'
-
+        # Save to Database
+        db.save_line_by_line('Dota2API', player_performance, 'player_performance')
+        db.save_line_by_line('Dota2API', player_info['players'][0], 'player_information')
+        return 'done'
+    except:
+        return('This profile is private, please choose another one')
 
 @player.route('/get/<steamid>')
 def get(steamid):
