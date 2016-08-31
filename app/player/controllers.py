@@ -5,6 +5,7 @@ import config
 from flask import Blueprint, request, render_template
 from common import util, db
 from bson.json_util import dumps
+import time
 
 player = Blueprint('player', __name__, url_prefix='/player')
 
@@ -31,6 +32,7 @@ def add():
         for match in first20:
             match = api.get_match_details(match['match_id'])
             match_player = [x for x in match['players'] if x['account_id'] == account32][0]
+            match_player['time'] = match['start_time']
             match20.append(match_player)
 
         player_performance = {}
@@ -61,6 +63,7 @@ def get(steamid):
         data['last_hits'] = i['last_hits']
         data['denies'] = i['denies']
         data['heroname'] = i['hero_name']
+        data['time'] = time.strftime("%D %H:%M", time.localtime(int(i['time'])))
         chart_data.append(data)
         del data
 
