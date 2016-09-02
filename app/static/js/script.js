@@ -1,4 +1,5 @@
 $( document ).ready(function(){
+    // Add player Ajax function
     $('#addPlayer').submit(function(event){
         event.preventDefault();
         var postData = $(this).serializeArray();
@@ -19,6 +20,7 @@ $( document ).ready(function(){
         });
     });
 
+    // Update entire database function
     $('#addPlayer').submit(function(event){
         event.preventDefault();
         var postData = $(this).serializeArray();

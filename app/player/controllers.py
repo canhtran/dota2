@@ -12,12 +12,16 @@ player = Blueprint('player', __name__, url_prefix='/player')
 api = dota2api.Initialise(config.STEAM_KEY)
 
 
+# Temporary page which list all players
+# Output: the cursor of list of players
 @player.route('/')
 def index():
     list_player = db.load_mongo('Dota2API', 'player_information')
     return render_template("player/index.html", data=list_player)
 
 
+# Add player to database
+# Process to get the data from API then save to mongodb
 @player.route('/add', methods=['POST', 'GET'])
 def add():
     account_id = request.form['playersteamid']
@@ -46,6 +50,8 @@ def add():
     except:
         return('This profile is private, please choose another one')
 
+
+# Function for Ajax to get from Mongodb, re-format and send back as json
 @player.route('/get/<steamid>')
 def get(steamid):
     projection = {"match": 1, "_id": 0}
@@ -70,6 +76,7 @@ def get(steamid):
     return dumps(chart_data)
 
 
+# Player Details page
 @player.route('/detail/<steamid>')
 def detail(steamid):
     projection = {"match": 1, "_id": 0}
