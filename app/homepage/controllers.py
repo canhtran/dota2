@@ -12,4 +12,4 @@ main = Blueprint('main', __name__)
 def index():
     list_player = db.load_mongo('Dota2API', 'player_information')
     l = db.load_mongo('Dota2API', 'player_information')
-    return render_template("homepage/index.html", data = list_player, test=l)
+    return render_template("homepage/index.html", data=list_player, test=l)

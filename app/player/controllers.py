@@ -39,16 +39,14 @@ def add():
             match_player['time'] = match['start_time']
             match20.append(match_player)
 
-        player_performance = {}
-        player_performance['steamid'] = str(account_id)
-        player_performance['match'] = match20
+        player_performance = {'steamid': str(account_id), 'match': match20}
 
         # Save to Database
         db.save_line_by_line('Dota2API', player_performance, 'player_performance')
         db.save_line_by_line('Dota2API', player_info['players'][0], 'player_information')
         return 'done'
     except:
-        return('This profile is private, please choose another one')
+        return 'This profile is private, please choose another one'
 
 
 # Function for Ajax to get from Mongodb, re-format and send back as json
@@ -60,16 +58,9 @@ def get(steamid):
     player_performance = player_performance[0]['match']
     chart_data = []
     for i in player_performance:
-        data = {}
-        data['kills'] = i['kills']
-        data['assists'] = i['assists']
-        data['deaths'] = i['deaths']
-        data['xp_per_min'] = i['xp_per_min']
-        data['gold_per_min'] = i['gold_per_min']
-        data['last_hits'] = i['last_hits']
-        data['denies'] = i['denies']
-        data['heroname'] = i['hero_name']
-        data['time'] = time.strftime("%D %H:%M", time.localtime(int(i['time'])))
+        data = {'kills': i['kills'], 'assists': i['assists'], 'deaths': i['deaths'], 'xp_per_min': i['xp_per_min'],
+                'gold_per_min': i['gold_per_min'], 'last_hits': i['last_hits'], 'denies': i['denies'],
+                'heroname': i['hero_name'], 'time': time.strftime("%D %H:%M", time.localtime(int(i['time'])))}
         chart_data.append(data)
         del data
 
@@ -83,4 +74,5 @@ def detail(steamid):
     query = {'steamid': str(steamid)}
     player_performance = db.load_match('Dota2API', 'player_performance', projection, query)
     player_info = db.load_mongo('Dota2API', 'player_information', query)
-    return render_template('player/detail.html', info = player_info)
+    data = [1, 2, 3, 4, 5, 6, 7, 8]
+    return render_template('player/detail.html', info=player_info, data=data)
