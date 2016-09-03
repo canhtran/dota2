@@ -60,7 +60,7 @@ def get(steamid):
     for i in player_performance:
         data = {'kills': i['kills'], 'assists': i['assists'], 'deaths': i['deaths'], 'xp_per_min': i['xp_per_min'],
                 'gold_per_min': i['gold_per_min'], 'last_hits': i['last_hits'], 'denies': i['denies'],
-                'heroname': i['hero_name'], 'time': time.strftime("%D %H:%M", time.localtime(int(i['time'])))}
+                'heroname': i['hero_name']}
         chart_data.append(data)
         del data
 
@@ -74,5 +74,5 @@ def detail(steamid):
     query = {'steamid': str(steamid)}
     player_performance = db.load_match('Dota2API', 'player_performance', projection, query)
     player_info = db.load_mongo('Dota2API', 'player_information', query)
-    data = [1, 2, 3, 4, 5, 6, 7, 8]
+    data = {'a': 1, 'b': 2, 'c':3}
     return render_template('player/detail.html', info=player_info, data=data)
