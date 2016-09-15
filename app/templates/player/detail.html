@@ -14,15 +14,15 @@
                     <img class="img-responsive" src="{{item.avatarfull}}" alt="">
                 </div>
                 {% endfor %}
-                <p>Last Hits: </p>
-                <p>Denies: </p>
-                <p>Gold spent: </p>
-                <p>Avg Level: </p>
-                <p>Kills: </p>
-                <p>Deaths: </p>
-                <p>Assists: </p>
-                <p>Gold per min: </p>
-                <p>XP per min: </p>
+                <p>Last Hits: {{last_hits}} (Average)</p>
+                <p>Denies: {{denies}} (Average)</p>
+                <p>Gold spent: {{gold_spent}} (Average)</p>
+                <p>Avg Level: {{avg_lv}} (Average)</p>
+                <p>Kills: {{kills}} (Average)</p>
+                <p>Deaths: {{deaths}} (Average)</p>
+                <p>Assists: {{assists}} (Average)</p>
+                <p>Gold per min: {{gold_per_min}} (Average)</p>
+                <p>XP per min: {{xp_per_min}} (Average)</p>
                 <h4>Most plays hero</h4>
                 <div class="heroes portfolio-item">
                     <img style="float:left" class="img-responsive hero-avatar" src="{{ url_for('static', filename='heroes/axe.png') }}" alt="">
@@ -55,19 +55,19 @@ var chart = AmCharts.makeChart( "chartradar", {
   "theme": "light",
   "dataProvider": [ {
         "skill": "Fighting",
-        "litres": 156.9
+        "litres": 30
       }, {
         "skill": "Farming",
-        "litres": 131.1
+        "litres": 40
       }, {
         "skill": "Supporting",
-        "litres": 115.8
+        "litres": 50
       }, {
         "skill": "Pushing",
-        "litres": 109.9
+        "litres": 99.9
       }, {
         "skill": "Versatility",
-        "litres": 108.3
+        "litres": 78.5
       } ],
   "valueAxes": [ {
     "axisTitleOffset": 20,
