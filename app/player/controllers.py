@@ -137,4 +137,8 @@ def getradar(steamid):
     heroes.append(match['hero_id'])
 
   versatility = len(list(set(heroes))) * 5
+  #farming: depend on last_hits and gold_per_min
+  #pushing: depend on tower damage which missing here
+  #support: depend on assists 
+  #fighting: depend on kills, gold_spent and deaths
   return dumps(versatility)
