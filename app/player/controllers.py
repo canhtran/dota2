@@ -125,6 +125,7 @@ def getradar(steamid):
   deaths = 0
   assists = 0
   gold_per_min = 0
+  tower_damage = 0
   heroes = []
 
   for match in player_performance:
@@ -134,6 +135,7 @@ def getradar(steamid):
     deaths = deaths + match['deaths']
     assists = assists + match['assists']
     gold_per_min = gold_per_min + match['gold_per_min']
+    tower_damage = tower_damage + match['tower_damage']
     heroes.append(match['hero_id'])
 
   versatility = len(list(set(heroes))) * 5
