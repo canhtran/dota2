@@ -148,5 +148,5 @@ def getradar(steamid):
 
     # fighting: depend on kills,
     fighting = (kills / 500) * 100
-    
+
     return dumps(tower_damage)
