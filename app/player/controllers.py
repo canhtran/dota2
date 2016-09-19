@@ -111,6 +111,7 @@ def detail(steamid):
                            xp_per_min=xp_per_min / 20)
 
 
+# Return data for Radar Chart
 @player.route('/get/radar/<steamid>')
 def getradar(steamid):
     projection = {"match": 1, "_id": 0}
