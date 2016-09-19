@@ -117,7 +117,6 @@ def getradar(steamid):
     query = {'steamid': str(steamid)}
     player_performance = db.load_match('Dota2API', 'player_performance', projection, query)
     player_performance = player_performance[0]['match']
-    chart_data = []
 
     last_hits = 0
     kills = 0
@@ -149,4 +148,8 @@ def getradar(steamid):
     # fighting: depend on kills,
     fighting = (kills / 500) * 100
 
-    return dumps(tower_damage)
+    chart_data = [{'skill': 'Fighting', 'value': fighting}, {'skill': 'Farming', 'value': farming},
+                  {'skill': 'Pushing', 'value': pushing},
+                  {'skill': 'Supporting', 'value': support}, {'skill': 'Versatility', 'value': versatility}]
+
+    return dumps(chart_data)

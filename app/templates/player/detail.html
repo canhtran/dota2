@@ -53,22 +53,9 @@
 var chart = AmCharts.makeChart( "chartradar", {
   "type": "radar",
   "theme": "light",
-  "dataProvider": [ {
-        "skill": "Fighting",
-        "litres": 30
-      }, {
-        "skill": "Farming",
-        "litres": 40
-      }, {
-        "skill": "Supporting",
-        "litres": 50
-      }, {
-        "skill": "Pushing",
-        "litres": 99.9
-      }, {
-        "skill": "Versatility",
-        "litres": 78.5
-      } ],
+  "dataLoader": {
+      "url": "/player/get/radar/76561198067352481"
+  },
   "valueAxes": [ {
     "axisTitleOffset": 20,
     "minimum": 0,
@@ -79,7 +66,7 @@ var chart = AmCharts.makeChart( "chartradar", {
     "balloonText": "[[value]]",
     "bullet": "round",
     "lineThickness": 2,
-    "valueField": "litres"
+    "valueField": "value"
   } ],
   "categoryField": "skill",
   "export": {
