@@ -50,11 +50,15 @@
 </div>
 
 <script>
+current_url = $(location).attr('pathname');
+split = current_url.split("/");
+url = '/player/get/radar/' + split[3];
+
 var chart = AmCharts.makeChart( "chartradar", {
   "type": "radar",
   "theme": "light",
   "dataLoader": {
-      "url": "/player/get/radar/76561198067352481"
+      "url": url
   },
   "valueAxes": [ {
     "axisTitleOffset": 20,
