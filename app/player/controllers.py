@@ -9,6 +9,7 @@ import time
 
 player = Blueprint('player', __name__, url_prefix='/player')
 
+# Init the api with steamkey
 api = dota2api.Initialise(config.STEAM_KEY)
 
 
