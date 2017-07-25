@@ -90,7 +90,7 @@ def messaging_events(data):
             else:
                 yield event.get("sender").get("id"), message.get("text").encode('unicode_escape')
         else:
-            yield event.get("sender").get("id"), "Dota 2 Coordinator is not connected.... GGWP."
+            yield event.get("sender").get("id"), "Dota 2 Coordinator is not connected, Mid Fail, GGWP."
 
 def receive_message(sender_id, message):
     if not re.match('\d{5}', message):
@@ -120,7 +120,7 @@ def dota2bot_username(text, sender_id):
     elif len(accounts) == 1:
         dota2bot_single_id(account.get("account_id"), sender_id)
     else:
-        common.send_message(sender_id, "Sorry I found no match, would you like to try another name?")
+        common.send_message(sender_id, "Sorry Noob, I cannot find your username, choose another one ?")
 
 def dota2bot_multiple_ids(account_ids, sender_id):
     return None
