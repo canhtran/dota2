@@ -49,30 +49,6 @@ def handle_messages(event, context):
         receive_message(sender, message)
         return "ok"
 
-@app.route('/', methods=['GET'])
-def handle_verification():
-    verify_token = request.args.get('hub.verify_token')
-    challenge = request.args.get('hub.challenge', '')
-
-    if verify_token == config.MESSENGER_TOKEN:
-        print "Verification successful! GL-HF"
-        return challenge
-    else:
-        print "Verification failed! GGWP !"
-        return 'Error, GGWP!'
-
-@app.route('/', methods=['POST'])
-def handle_messages():
-    body = json.loads(request.get_data())
-    print body
-
-    if body.get("object") != "page":
-        return 'Noobs, GGWP !'
-
-    for sender_id, message in messaging_events(body):
-        print "Incoming from %s: %s" % (sender_id, message)
-        receive_message(sender_id, message)
-        return "ok"
 
 """
 Generate tuples of (sender_id, message_text) from the
@@ -152,6 +128,3 @@ User key in only one account_id
 """
 def dota2bot_single_id(account_id, sender_id):
     PlayerProfile.profile_generator(account_id, sender_id)
-
-if __name__ == '__main__':
-    app.run(debug=True)
