@@ -30,7 +30,7 @@ def handle_verification(event, context):
 
     if verify_token == config.MESSENGER_TOKEN:
         print "Verification successful! GL-HF"
-        return int(challenge)
+        return challenge
     else:
         print "Verification failed! GGWP !"
         return 'Error, GGWP!'
@@ -54,9 +54,9 @@ def handle_verification():
     verify_token = request.args.get('hub.verify_token')
     challenge = request.args.get('hub.challenge', '')
 
-    if challenge == config.MESSENGER_TOKEN:
+    if verify_token == config.MESSENGER_TOKEN:
         print "Verification successful! GL-HF"
-        return int(challenge)
+        return challenge
     else:
         print "Verification failed! GGWP !"
         return 'Error, GGWP!'
@@ -92,19 +92,23 @@ def messaging_events(data):
         else:
             yield event.get("sender").get("id"), "Dota 2 Coordinator is not connected, Mid Fail, GGWP."
 
+"""
+Process message from event (sender_id, message)
+"""
 def receive_message(sender_id, message):
     if not re.match('\d{5}', message):
         dota2bot_username(message, sender_id)
     else:
         account_ids = re.findall('\d+', message)
-        if len(account_ids) > 1: # If many
+        if len(account_ids) > 1:
             dota2bot_multiple_ids(account_ids, sender_id)
-        else: # Otherwise
+        else:
             account_id = account_ids[0]
             dota2bot_single_id(account_id, sender_id)
 
-    # common.send_message(config.PAT, sender, message)
-
+"""
+User key in Username
+"""
 def dota2bot_username(text, sender_id):
     accounts = common.call_opendata("/search", params={'q':text})
     if len(accounts) > 1:
@@ -122,11 +126,32 @@ def dota2bot_username(text, sender_id):
     else:
         common.send_message(sender_id, "Sorry Noob, I cannot find your username, choose another one ?")
 
+"""
+User key in multiple account ids
+"""
 def dota2bot_multiple_ids(account_ids, sender_id):
-    return None
+    options = []
+    i = 0
+    for account_id in account_ids[:10]:
+        player = PlayerProfile.get_player(account_id)
+        if player.get("profile"):
+            i += 1
+            options.append({
+                'content_type': "text",
+                'title': player.get("profile").get("personaname"),
+                'payload': player.get("profile").get("account_id"),
+                'image_url': player.get("profile").get("avatarfull"),
+            })
+    if i > 0:
+        common.send_message(sender_id, "Single Draft, please pick one account only", options=options)
+    else:
+        common.send_message(sender_id, "Don't bluff me, Are you sure this is Dota profile ?")
 
+"""
+User key in only one account_id
+"""
 def dota2bot_single_id(account_id, sender_id):
     PlayerProfile.profile_generator(account_id, sender_id)
 
 if __name__ == '__main__':
-  app.run(debug=True)
+    app.run(debug=True)
