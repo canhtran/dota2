@@ -1,22 +1,19 @@
-# -*- coding: utf-8 -*-
 import json
 import config
 import re
 import common
 import PlayerProfile
-import logging
 
-"""
-Setup the logger
-"""
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
+# This needs to be filled with the Page Access Token that will be provided
+# by the Facebook App that will be created.
+
+
 
 """
 Lambda handler
 """
 def handler(event, context):
-    if keys_exist(event, ["params","querystring","hub.verify_token","hub.challenge"]):
+    if event.get("context").get("http-method") == "GET":
         return handle_verification(event, context)
     else:
         return handle_messages(event, context)
@@ -32,7 +29,7 @@ def handle_verification(event, context):
 
     if verify_token == config.MESSENGER_TOKEN:
         print "Verification successful! GL-HF"
-        return int(challenge)
+        return challenge
     else:
         print "Verification failed! GGWP !"
         return 'Error, GGWP!'
@@ -41,16 +38,13 @@ def handle_verification(event, context):
 Catch the message which key in from messenger
 """
 def handle_messages(event, context):
-    print event
-    body = json.loads(event.get("body"))
-    print body
+    body = event.get("body-json")
 
     if body.get("object") != "page":
         return 'Noobs, GGWP !'
 
     for sender, message in messaging_events(body):
         print "Incoming from %s: %s" % (sender, message)
-        logger.info(json.dumps(message))
         receive_message(sender, message)
         return "ok"
 
@@ -133,18 +127,3 @@ User key in only one account_id
 """
 def dota2bot_single_id(account_id, sender_id):
     PlayerProfile.profile_generator(account_id, sender_id)
-
-def keys_exist(obj, keys):
-    for key in keys:
-        if find_item(obj, key) is None:
-            return False
-    return True
-
-def find_item(obj, key):
-    item = None
-    if key in obj: return obj[key]
-    for k, v in obj.items():
-        if isinstance(v,dict):
-            item = find_item(v, key)
-            if item is not None:
-                return item

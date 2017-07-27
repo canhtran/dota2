@@ -5,6 +5,7 @@ Generate player profile based on Account ID
 """
 def profile_generator(account_id, sender_id):
     player = get_player(account_id)
+    
     if player.get("profile"):
         common.send_message(sender_id, "Hey, I know you ! ")
         common.send_message(sender_id, "Your Steam Account ID: %s" % account_id)
