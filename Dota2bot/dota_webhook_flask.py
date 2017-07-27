@@ -16,22 +16,21 @@ def handle_verification():
     challenge = request.args.get('hub.challenge', '')
 
     if verify_token == config.MESSENGER_TOKEN:
-        print "Verification successful! GL-HF"
+        print("Verification successful! GL-HF")
         return challenge
     else:
-        print "Verification failed! GGWP !"
+        print("Verification failed! GGWP !")
         return 'Error, GGWP!'
 
 @app.route('/', methods=['POST'])
 def handle_messages():
     body = json.loads(request.get_data())
-    print body
 
     if body.get("object") != "page":
         return 'Noobs, GGWP !'
 
     for sender_id, message in messaging_events(body):
-        print "Incoming from %s: %s" % (sender_id, message)
+        print("Incoming from %s: %s" % (sender_id, message))
         receive_message(sender_id, message)
         return "ok"
 
@@ -41,8 +40,8 @@ provided payload.
 """
 def messaging_events(data):
     messaging_events = data["entry"][0]["messaging"]
-    print "Message Event"
-    print messaging_events
+    print("Message Event")
+    print(messaging_events)
     for event in messaging_events:
         if event.get("message"):
             message = event.get("message")
@@ -57,10 +56,10 @@ def messaging_events(data):
 Process message from event (sender_id, message)
 """
 def receive_message(sender_id, message):
-    if not re.match('\d{5}', message):
+    if not re.match('\d{5}', message.decode('utf-8')):
         dota2bot_username(message, sender_id)
     else:
-        account_ids = re.findall('\d+', message)
+        account_ids = re.findall('\d+', message.decode('utf-8'))
         if len(account_ids) > 1:
             dota2bot_multiple_ids(account_ids, sender_id)
         else:
