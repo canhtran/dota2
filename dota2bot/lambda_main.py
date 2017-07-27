@@ -161,11 +161,11 @@ def profile_generator(account_id, sender_id):
     if player.get("profile"):
         send_message(sender_id, "Hey, I know you ! ")
         send_message(sender_id, "Your Steam Account ID: %s" % account_id)
-        name = player.get("profile").get("personaname")
+        name = player["profile"]["personaname"]
         send_message(sender_id, "Name: %s" % name)
         send_image(
             sender_id,
-            player.get("profile").get("avatarfull"),
+            player["profile"]["personaname"],
         )
 
         send_message(sender_id, "Let me find some insights about you")
@@ -173,8 +173,8 @@ def profile_generator(account_id, sender_id):
         """Win Rate
         """
         wl = get_wl(account_id)
-        total_matches = wl.get("lose") + wl.get("win")
-        winrate = (wl.get("win") / float(total_matches)) * 100
+        total_matches = wl["lose"] + wl["win"]
+        winrate = (wl["win"] / float(total_matches)) * 100
         send_message(
             sender_id,
             "Winrate: %s" % winrate + "%"
