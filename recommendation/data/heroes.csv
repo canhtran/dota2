@@ -1,0 +1,114 @@
+attack_type,id,legs,localized_name,name,primary_attr,roles,main_role
+Melee,1,2,Anti-Mage,npc_dota_hero_antimage,agi,"[u'Carry', u'Escape', u'Nuker']",carry
+Melee,2,2,Axe,npc_dota_hero_axe,str,"[u'Initiator', u'Durable', u'Disabler', u'Jungler']",offlane
+Ranged,3,4,Bane,npc_dota_hero_bane,int,"[u'Support', u'Disabler', u'Nuker', u'Durable']",support
+Melee,4,2,Bloodseeker,npc_dota_hero_bloodseeker,agi,"[u'Carry', u'Disabler', u'Jungler', u'Nuker', u'Initiator']",carry
+Ranged,5,2,Crystal Maiden,npc_dota_hero_crystal_maiden,int,"[u'Support', u'Disabler', u'Nuker', u'Jungler']",support
+Ranged,6,2,Drow Ranger,npc_dota_hero_drow_ranger,agi,"[u'Carry', u'Disabler', u'Pusher']",carry
+Melee,7,2,Earthshaker,npc_dota_hero_earthshaker,str,"[u'Support', u'Initiator', u'Disabler', u'Nuker']",offlane
+Melee,8,2,Juggernaut,npc_dota_hero_juggernaut,agi,"[u'Carry', u'Pusher', u'Escape']",carry
+Ranged,9,2,Mirana,npc_dota_hero_mirana,agi,"[u'Carry', u'Support', u'Escape', u'Nuker', u'Disabler']",mid
+Ranged,10,0,Morphling,npc_dota_hero_morphling,agi,"[u'Carry', u'Escape', u'Durable', u'Nuker', u'Disabler']",carry
+Ranged,11,0,Shadow Fiend,npc_dota_hero_nevermore,agi,"[u'Carry', u'Nuker']",mid
+Melee,12,2,Phantom Lancer,npc_dota_hero_phantom_lancer,agi,"[u'Carry', u'Escape', u'Pusher', u'Nuker']",carry
+Ranged,13,2,Puck,npc_dota_hero_puck,int,"[u'Initiator', u'Disabler', u'Escape', u'Nuker']",mid
+Melee,14,2,Pudge,npc_dota_hero_pudge,str,"[u'Disabler', u'Initiator', u'Durable', u'Nuker']",offlane
+Ranged,15,0,Razor,npc_dota_hero_razor,agi,"[u'Carry', u'Durable', u'Nuker', u'Pusher']",mid
+Melee,16,6,Sand King,npc_dota_hero_sand_king,str,"[u'Initiator', u'Disabler', u'Nuker', u'Escape', u'Jungler']",offlane
+Ranged,17,2,Storm Spirit,npc_dota_hero_storm_spirit,int,"[u'Carry', u'Escape', u'Nuker', u'Initiator', u'Disabler']",mid
+Melee,18,2,Sven,npc_dota_hero_sven,str,"[u'Carry', u'Disabler', u'Initiator', u'Durable', u'Nuker']",carry
+Melee,19,2,Tiny,npc_dota_hero_tiny,str,"[u'Carry', u'Nuker', u'Pusher', u'Initiator', u'Durable', u'Disabler']",carry
+Ranged,20,2,Vengeful Spirit,npc_dota_hero_vengefulspirit,agi,"[u'Support', u'Initiator', u'Disabler', u'Nuker', u'Escape']",support
+Ranged,21,2,Windranger,npc_dota_hero_windrunner,int,"[u'Carry', u'Support', u'Disabler', u'Escape', u'Nuker']",mid
+Ranged,22,2,Zeus,npc_dota_hero_zuus,int,[u'Nuker'],mid
+Melee,23,2,Kunkka,npc_dota_hero_kunkka,str,"[u'Carry', u'Disabler', u'Initiator', u'Durable', u'Nuker']",offlane
+Ranged,25,2,Lina,npc_dota_hero_lina,int,"[u'Support', u'Carry', u'Nuker', u'Disabler']",mid
+Ranged,26,2,Lion,npc_dota_hero_lion,int,"[u'Support', u'Disabler', u'Nuker', u'Initiator']",support
+Ranged,27,2,Shadow Shaman,npc_dota_hero_shadow_shaman,int,"[u'Support', u'Pusher', u'Disabler', u'Nuker', u'Initiator']",support
+Melee,28,0,Slardar,npc_dota_hero_slardar,str,"[u'Carry', u'Durable', u'Initiator', u'Disabler', u'Escape']",offlane
+Melee,29,2,Tidehunter,npc_dota_hero_tidehunter,str,"[u'Initiator', u'Durable', u'Disabler', u'Nuker']",offlane
+Ranged,30,2,Witch Doctor,npc_dota_hero_witch_doctor,int,"[u'Support', u'Nuker', u'Disabler']",support
+Ranged,31,2,Lich,npc_dota_hero_lich,int,"[u'Support', u'Nuker']",support
+Melee,32,2,Riki,npc_dota_hero_riki,agi,"[u'Carry', u'Escape', u'Disabler']",support
+Ranged,33,0,Enigma,npc_dota_hero_enigma,int,"[u'Disabler', u'Jungler', u'Initiator', u'Pusher']",offlane
+Ranged,34,2,Tinker,npc_dota_hero_tinker,int,"[u'Carry', u'Nuker', u'Pusher']",mid
+Ranged,35,2,Sniper,npc_dota_hero_sniper,agi,"[u'Carry', u'Nuker']",carry
+Ranged,36,2,Necrophos,npc_dota_hero_necrolyte,int,"[u'Carry', u'Nuker', u'Durable', u'Disabler']",carry
+Ranged,37,2,Warlock,npc_dota_hero_warlock,int,"[u'Support', u'Initiator', u'Disabler']",support
+Melee,38,2,Beastmaster,npc_dota_hero_beastmaster,str,"[u'Initiator', u'Disabler', u'Durable', u'Nuker']",offlane
+Ranged,39,2,Queen of Pain,npc_dota_hero_queenofpain,int,"[u'Carry', u'Nuker', u'Escape']",mid
+Ranged,40,0,Venomancer,npc_dota_hero_venomancer,agi,"[u'Support', u'Nuker', u'Initiator', u'Pusher', u'Disabler']",offlane
+Melee,41,2,Faceless Void,npc_dota_hero_faceless_void,agi,"[u'Carry', u'Initiator', u'Disabler', u'Escape', u'Durable']",offlane
+Melee,42,2,Wraith King,npc_dota_hero_skeleton_king,str,"[u'Carry', u'Support', u'Durable', u'Disabler', u'Initiator']",carry
+Ranged,43,2,Death Prophet,npc_dota_hero_death_prophet,int,"[u'Carry', u'Pusher', u'Nuker', u'Disabler']",mid
+Melee,44,2,Phantom Assassin,npc_dota_hero_phantom_assassin,agi,"[u'Carry', u'Escape']",carry
+Ranged,45,2,Pugna,npc_dota_hero_pugna,int,"[u'Nuker', u'Pusher']",support
+Ranged,46,2,Templar Assassin,npc_dota_hero_templar_assassin,agi,"[u'Carry', u'Escape']",mid
+Ranged,47,0,Viper,npc_dota_hero_viper,agi,"[u'Carry', u'Durable', u'Initiator', u'Disabler']",mid
+Ranged,48,2,Luna,npc_dota_hero_luna,agi,"[u'Carry', u'Nuker', u'Pusher']",carry
+Melee,49,2,Dragon Knight,npc_dota_hero_dragon_knight,str,"[u'Carry', u'Pusher', u'Durable', u'Disabler', u'Initiator', u'Nuker']",mid
+Ranged,50,2,Dazzle,npc_dota_hero_dazzle,int,"[u'Support', u'Nuker', u'Disabler']",support
+Melee,51,2,Clockwerk,npc_dota_hero_rattletrap,str,"[u'Initiator', u'Disabler', u'Durable', u'Nuker']",offlane
+Ranged,52,4,Leshrac,npc_dota_hero_leshrac,int,"[u'Carry', u'Support', u'Nuker', u'Pusher', u'Disabler']",mid
+Ranged,53,2,Nature's Prophet,npc_dota_hero_furion,int,"[u'Carry', u'Jungler', u'Pusher', u'Escape', u'Nuker']",offlane
+Melee,54,2,Lifestealer,npc_dota_hero_life_stealer,str,"[u'Carry', u'Durable', u'Jungler', u'Escape', u'Disabler']",carry
+Melee,55,2,Dark Seer,npc_dota_hero_dark_seer,int,"[u'Initiator', u'Jungler', u'Escape', u'Disabler']",offlane
+Ranged,56,2,Clinkz,npc_dota_hero_clinkz,agi,"[u'Carry', u'Escape', u'Pusher']",carry
+Melee,57,2,Omniknight,npc_dota_hero_omniknight,str,"[u'Support', u'Durable', u'Nuker']",support
+Ranged,58,4,Enchantress,npc_dota_hero_enchantress,int,"[u'Support', u'Jungler', u'Pusher', u'Durable', u'Disabler']",support
+Ranged,59,2,Huskar,npc_dota_hero_huskar,str,"[u'Carry', u'Durable', u'Initiator']",carry
+Melee,60,2,Night Stalker,npc_dota_hero_night_stalker,str,"[u'Carry', u'Initiator', u'Durable', u'Disabler', u'Nuker']",offlane
+Melee,61,8,Broodmother,npc_dota_hero_broodmother,agi,"[u'Carry', u'Pusher', u'Escape', u'Nuker']",offlane
+Melee,62,2,Bounty Hunter,npc_dota_hero_bounty_hunter,agi,"[u'Escape', u'Nuker']",support
+Ranged,63,4,Weaver,npc_dota_hero_weaver,agi,"[u'Carry', u'Escape']",carry
+Ranged,64,2,Jakiro,npc_dota_hero_jakiro,int,"[u'Support', u'Nuker', u'Pusher', u'Disabler']",support
+Ranged,65,2,Batrider,npc_dota_hero_batrider,int,"[u'Initiator', u'Jungler', u'Disabler', u'Escape']",offlane
+Ranged,66,2,Chen,npc_dota_hero_chen,int,"[u'Support', u'Jungler', u'Pusher']",support
+Melee,67,0,Spectre,npc_dota_hero_spectre,agi,"[u'Carry', u'Durable', u'Escape']",carry
+Ranged,68,2,Ancient Apparition,npc_dota_hero_ancient_apparition,int,"[u'Support', u'Disabler', u'Nuker']",support
+Melee,69,2,Doom,npc_dota_hero_doom_bringer,str,"[u'Carry', u'Disabler', u'Initiator', u'Durable', u'Nuker']",offlane
+Melee,70,2,Ursa,npc_dota_hero_ursa,agi,"[u'Carry', u'Jungler', u'Durable', u'Disabler']",carry
+Melee,71,2,Spirit Breaker,npc_dota_hero_spirit_breaker,str,"[u'Carry', u'Initiator', u'Disabler', u'Durable', u'Escape']",offlane
+Ranged,72,2,Gyrocopter,npc_dota_hero_gyrocopter,agi,"[u'Carry', u'Nuker', u'Disabler']",carry
+Melee,73,2,Alchemist,npc_dota_hero_alchemist,str,"[u'Carry', u'Support', u'Durable', u'Disabler', u'Initiator', u'Nuker']",mid
+Ranged,74,2,Invoker,npc_dota_hero_invoker,int,"[u'Carry', u'Nuker', u'Disabler', u'Escape', u'Pusher']",mid
+Ranged,75,2,Silencer,npc_dota_hero_silencer,int,"[u'Carry', u'Support', u'Disabler', u'Initiator', u'Nuker']",offlane
+Ranged,76,4,Outworld Devourer,npc_dota_hero_obsidian_destroyer,int,"[u'Carry', u'Nuker', u'Disabler']",mid
+Melee,77,2,Lycan,npc_dota_hero_lycan,str,"[u'Carry', u'Pusher', u'Jungler', u'Durable', u'Escape']",carry
+Melee,78,2,Brewmaster,npc_dota_hero_brewmaster,str,"[u'Carry', u'Initiator', u'Durable', u'Disabler', u'Nuker']",mid
+Ranged,79,2,Shadow Demon,npc_dota_hero_shadow_demon,int,"[u'Support', u'Disabler', u'Initiator', u'Nuker']",support
+Ranged,80,2,Lone Druid,npc_dota_hero_lone_druid,agi,"[u'Carry', u'Pusher', u'Jungler', u'Durable']",carry
+Melee,81,2,Chaos Knight,npc_dota_hero_chaos_knight,str,"[u'Carry', u'Disabler', u'Durable', u'Pusher', u'Initiator']",carry
+Melee,82,2,Meepo,npc_dota_hero_meepo,agi,"[u'Carry', u'Escape', u'Nuker', u'Disabler', u'Initiator', u'Pusher']",carry
+Melee,83,2,Treant Protector,npc_dota_hero_treant,str,"[u'Support', u'Initiator', u'Durable', u'Disabler', u'Escape']",support
+Melee,84,2,Ogre Magi,npc_dota_hero_ogre_magi,int,"[u'Support', u'Nuker', u'Disabler', u'Durable', u'Initiator']",support
+Melee,85,2,Undying,npc_dota_hero_undying,str,"[u'Support', u'Durable', u'Disabler', u'Nuker']",offlane
+Ranged,86,2,Rubick,npc_dota_hero_rubick,int,"[u'Support', u'Disabler', u'Nuker']",support
+Ranged,87,2,Disruptor,npc_dota_hero_disruptor,int,"[u'Support', u'Disabler', u'Nuker', u'Initiator']",support
+Melee,88,6,Nyx Assassin,npc_dota_hero_nyx_assassin,agi,"[u'Disabler', u'Nuker', u'Initiator', u'Escape']",offlane
+Melee,89,0,Naga Siren,npc_dota_hero_naga_siren,agi,"[u'Carry', u'Support', u'Pusher', u'Disabler', u'Initiator', u'Escape']",carry
+Ranged,90,2,Keeper of the Light,npc_dota_hero_keeper_of_the_light,int,"[u'Support', u'Nuker', u'Disabler', u'Jungler']",support
+Ranged,91,0,Io,npc_dota_hero_wisp,str,"[u'Support', u'Escape', u'Nuker']",support
+Ranged,92,2,Visage,npc_dota_hero_visage,int,"[u'Support', u'Nuker', u'Durable', u'Disabler', u'Pusher']",support
+Melee,93,2,Slark,npc_dota_hero_slark,agi,"[u'Carry', u'Escape', u'Disabler', u'Nuker']",carry
+Ranged,94,0,Medusa,npc_dota_hero_medusa,agi,"[u'Carry', u'Disabler', u'Durable']",carry
+Ranged,95,2,Troll Warlord,npc_dota_hero_troll_warlord,agi,"[u'Carry', u'Pusher', u'Disabler', u'Durable']",carry
+Melee,96,4,Centaur Warrunner,npc_dota_hero_centaur,str,"[u'Durable', u'Initiator', u'Disabler', u'Nuker', u'Escape']",offlane
+Melee,97,4,Magnus,npc_dota_hero_magnataur,str,"[u'Initiator', u'Disabler', u'Nuker', u'Escape']",offlane
+Melee,98,2,Timbersaw,npc_dota_hero_shredder,str,"[u'Nuker', u'Durable', u'Escape']",mid
+Melee,99,2,Bristleback,npc_dota_hero_bristleback,str,"[u'Carry', u'Durable', u'Initiator', u'Nuker']",offlane
+Melee,100,2,Tusk,npc_dota_hero_tusk,str,"[u'Initiator', u'Disabler', u'Nuker']",offlane
+Ranged,101,2,Skywrath Mage,npc_dota_hero_skywrath_mage,int,"[u'Support', u'Nuker', u'Disabler']",support
+Melee,102,2,Abaddon,npc_dota_hero_abaddon,str,"[u'Support', u'Carry', u'Durable']",support
+Melee,103,2,Elder Titan,npc_dota_hero_elder_titan,str,"[u'Initiator', u'Disabler', u'Nuker', u'Durable']",support
+Melee,104,2,Legion Commander,npc_dota_hero_legion_commander,str,"[u'Carry', u'Disabler', u'Initiator', u'Durable', u'Nuker']",carry
+Ranged,105,6,Techies,npc_dota_hero_techies,int,"[u'Nuker', u'Disabler']",offlane
+Melee,106,2,Ember Spirit,npc_dota_hero_ember_spirit,agi,"[u'Carry', u'Escape', u'Nuker', u'Disabler', u'Initiator']",mid
+Melee,107,2,Earth Spirit,npc_dota_hero_earth_spirit,str,"[u'Nuker', u'Escape', u'Disabler', u'Initiator', u'Durable']",support
+Melee,108,2,Underlord,npc_dota_hero_abyssal_underlord,str,"[u'Support', u'Nuker', u'Disabler', u'Durable', u'Escape']",offlane
+Melee,109,2,Terrorblade,npc_dota_hero_terrorblade,agi,"[u'Carry', u'Pusher', u'Nuker']",carry
+Ranged,110,2,Phoenix,npc_dota_hero_phoenix,str,"[u'Support', u'Nuker', u'Initiator', u'Escape', u'Disabler']",support
+Ranged,111,2,Oracle,npc_dota_hero_oracle,int,"[u'Support', u'Nuker', u'Disabler', u'Escape']",support
+Ranged,112,2,Winter Wyvern,npc_dota_hero_winter_wyvern,int,"[u'Support', u'Disabler', u'Nuker']",support
+Ranged,113,2,Arc Warden,npc_dota_hero_arc_warden,agi,"[u'Carry', u'Escape', u'Nuker']",carry
+Melee,114,2,Monkey King,npc_dota_hero_monkey_king,agi,"[u'Carry', u'Escape', u'Disabler', u'Initiator']",offlane
