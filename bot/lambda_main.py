@@ -1,19 +1,9 @@
 # -*- coding: utf-8 -*-
 import json
-import requests
+import config
 import re
-import logging
-
-PAT = 'EAAKYTN5BHzUBAJSCZAxifrX2jNN3fQ8agaZCq3kup1ZCG1KXBnFux84J46ndvaBgJYZAkZBrI6QkaxRkMfTuaiZCj4u2le8ivvsIWrSRYvwYu41Cyk0o8gJcaok3L4i2VqOLuoqL4ZAfNdFizjV1SoioY2KNENkxqVhqwrZC9GNGTAZDZD'
-MESSENGER_TOKEN = 'dota_my_password_verify_me'
-FB_ENDPOINT = 'https://graph.facebook.com/v2.6/me/messages'
-OPENDOTA_ENDPOINT = 'https://api.opendota.com/api/'
-
-"""
-Setup the logger
-"""
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
+import requests
+import time
 
 """
 Lambda handler
@@ -33,7 +23,7 @@ def handle_verification(event, context):
     verify_token = querystring.get("hub.verify_token")
     challenge = querystring.get("hub.challenge")
 
-    if verify_token == MESSENGER_TOKEN:
+    if verify_token == config.MESSENGER_TOKEN:
         print("Verification successful! GL-HF")
         return int(challenge)
     else:
@@ -52,8 +42,7 @@ def handle_messages(event, context):
     for sender, message in messaging_events(body):
         print("Incoming from %s: %s" % (sender, message))
         receive_message(sender, message)
-        return "ok"
-
+        return None
 
 """
 Generate tuples of (sender_id, message_text) from the
@@ -149,23 +138,20 @@ def find_item(obj, key):
             if item is not None:
                 return item
 
-"""
-Generate player profile based on Account ID
-"""
 def profile_generator(account_id, sender_id):
     player = get_player(account_id)
 
     if player.get("profile"):
-        send_message(sender_id, "Hey, I know you ! ")
-        send_message(sender_id, "Your Steam Account ID: %s" % account_id)
+        send_message(sender_id, "Hey, Let me see what I have about this player... ")
+        send_message(sender_id, "Steam Account ID: %s" % account_id)
         name = player["profile"]["personaname"]
-        send_message(sender_id, "Name: %s" % name)
+        send_message(sender_id, "Ah ha! I know this person, this is: %s 💎" % name)
         send_image(
             sender_id,
-            player["profile"]["personaname"],
+            player.get("profile").get("avatarfull"),
         )
 
-        send_message(sender_id, "Let me find some insights about you")
+        send_message(sender_id, "I love the avatar 💓. Let me find some insights about this player")
 
         """Win Rate
         """
@@ -174,9 +160,8 @@ def profile_generator(account_id, sender_id):
         winrate = (wl["win"] / float(total_matches)) * 100
         send_message(
             sender_id,
-            "Winrate: %s" % winrate + "%"
+            "Hmm... your winrate is %s" % winrate + "%. That's not too bad."
         )
-        send_message(sender_id, "That's great!!!")
 
         """Player statistics
         """
@@ -185,12 +170,11 @@ def profile_generator(account_id, sender_id):
             "I can help you calculate some statistics based on your %s matches:" % total_matches
         )
         player_stats = get_player_statistics(account_id)
-        test_mess = "Message \n with a line break"
         stat_mess = ''
         for index, value in player_stats.items():
-            stat_mess += " -- %s: %s \n" % (index, value)
+            stat_mess += "👉 %s: %s\n" % (index, value)
         send_message(sender_id, stat_mess)
-        send_message(sender_id, "Hmm.. That's the average number you got per match. Keep it up!")
+        send_message(sender_id, "That's the average number you got per match. Keep it up!")
     else:
         send_message(sender_id, "Are you kidding me? This account is invalid or private.")
 
@@ -213,42 +197,38 @@ def get_player_statistics(account_id):
     totals = call_opendata("/players/" + account_id + "/totals")
     statistics = {}
     for item in totals[:8]:
-        statistics[item['field']] = item['sum'] / item['n']
+        statistics[item['field']] = round(item['sum'] / item['n'])
 
     return statistics
-
 
 """
 Support function for call opendata api
 """
 def call_opendata(path, params=None):
-    return requests.get(OPENDOTA_ENDPOINT + path, params=params).json()
+    return requests.get(config.OPENDOTA_ENDPOINT + path, params=params).json()
 
 """
 Send the message text to recipient with id recipient.
 """
-"""
-send_text_message will send a simple text message
-if options are specified, the messewnger will display those options
-"""
-def send_message(sender_id, message_text, options=None):
+def send_message(sender_id, text, options=None):
     payload = {
         'recipient': {
             'id': sender_id,
         },
         'message': {
-            'text': message_text[:640],
+            'text': text[:640],
         },
     }
     if options is not None:
         payload["message"]["quick_replies"] = options
-    return call_send_api(payload)
+    return send_api(payload)
 
 """
-send_image will upload an image to the messenger
+Send image to receipient
+The picture will be uploaded to messenger
 """
 def send_image(sender_id, image_url):
-    return call_send_api({
+    return send_api({
         'recipient': {
             'id': sender_id,
         },
@@ -267,23 +247,20 @@ send_indicator will execute the action on the messenger
 https://developers.facebook.com/docs/messenger-platform/send-api-reference/sender-actions
 """
 def send_indicator(sender_id, action):
-    call_send_api({
+    return send_api({
         'recipient': {
             'id': sender_id,
         },
         'sender_action': action,
     })
-
 """
-call_send_api sends the payload to FB Messenger API
+send_api sends the payload to FB Messenger API
 """
-def call_send_api(payload):
+def send_api(payload):
     url = "%s?access_token=%s" % (
-        FB_ENDPOINT,
-        PAT,
+        config.FB_ENDPOINT,
+        config.PAT,
     )
-    print(url)
-    print(payload)
     return requests.post(
         url,
         json=payload
