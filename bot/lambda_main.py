@@ -4,7 +4,7 @@ import requests
 import re
 import logging
 
-PAT = 'EAAKYTN5BHzUBAB1FDrj6niP5U2WVdNxRo8D5f96CGrFRgl2G3RYHDm6RCJap54dXERNt0RneE9GRSNKwThabnD6vUHWNtC3oTnZCZAD1MMEYM0ixYRedGt7J0BFOK5TvmABUi7XaAHUVtHQ6snTIvdaD7Y4kKS1cWi8bCc5gZDZD'
+PAT = 'EAAKYTN5BHzUBAJSCZAxifrX2jNN3fQ8agaZCq3kup1ZCG1KXBnFux84J46ndvaBgJYZAkZBrI6QkaxRkMfTuaiZCj4u2le8ivvsIWrSRYvwYu41Cyk0o8gJcaok3L4i2VqOLuoqL4ZAfNdFizjV1SoioY2KNENkxqVhqwrZC9GNGTAZDZD'
 MESSENGER_TOKEN = 'dota_my_password_verify_me'
 FB_ENDPOINT = 'https://graph.facebook.com/v2.6/me/messages'
 OPENDOTA_ENDPOINT = 'https://api.opendota.com/api/'
@@ -34,26 +34,23 @@ def handle_verification(event, context):
     challenge = querystring.get("hub.challenge")
 
     if verify_token == MESSENGER_TOKEN:
-        print "Verification successful! GL-HF"
+        print("Verification successful! GL-HF")
         return int(challenge)
     else:
-        print "Verification failed! GGWP !"
+        print("Verification failed! GGWP !")
         return 'Error, GGWP!'
 
 """
 Catch the message which key in from messenger
 """
 def handle_messages(event, context):
-    print event
-    body = json.loads(event.get("body"))
-    print body
+    body = event.get("body-json")
 
     if body.get("object") != "page":
         return 'Noobs, GGWP !'
 
     for sender, message in messaging_events(body):
-        print "Incoming from %s: %s" % (sender, message)
-        logger.info(json.dumps(message))
+        print("Incoming from %s: %s" % (sender, message))
         receive_message(sender, message)
         return "ok"
 
@@ -64,8 +61,8 @@ provided payload.
 """
 def messaging_events(data):
     messaging_events = data["entry"][0]["messaging"]
-    print "Message Event"
-    print messaging_events
+    print("Message Event")
+    print(messaging_events)
     for event in messaging_events:
         if event.get("message"):
             message = event.get("message")
@@ -80,10 +77,10 @@ def messaging_events(data):
 Process message from event (sender_id, message)
 """
 def receive_message(sender_id, message):
-    if not re.match('\d{5}', message):
+    if not re.match('\d{5}', message.decode('utf-8')):
         dota2bot_username(message, sender_id)
     else:
-        account_ids = re.findall('\d+', message)
+        account_ids = re.findall('\d+', message.decode('utf-8'))
         if len(account_ids) > 1:
             dota2bot_multiple_ids(account_ids, sender_id)
         else:
@@ -188,11 +185,11 @@ def profile_generator(account_id, sender_id):
             "I can help you calculate some statistics based on your %s matches:" % total_matches
         )
         player_stats = get_player_statistics(account_id)
-        for index, value in player_stats.iteritems():
-            send_message(
-                sender_id,
-                " -- %s: %s" % (index, value)
-            )
+        test_mess = "Message \n with a line break"
+        stat_mess = ''
+        for index, value in player_stats.items():
+            stat_mess += " -- %s: %s \n" % (index, value)
+        send_message(sender_id, stat_mess)
         send_message(sender_id, "Hmm.. That's the average number you got per match. Keep it up!")
     else:
         send_message(sender_id, "Are you kidding me? This account is invalid or private.")
@@ -230,28 +227,28 @@ def call_opendata(path, params=None):
 """
 Send the message text to recipient with id recipient.
 """
-def send_message(sender_id, text, options=None):
-    message = {
-        "recipient": {"id": sender_id},
-        "message": {"text": text},
+"""
+send_text_message will send a simple text message
+if options are specified, the messewnger will display those options
+"""
+def send_message(sender_id, message_text, options=None):
+    payload = {
+        'recipient': {
+            'id': sender_id,
+        },
+        'message': {
+            'text': message_text[:640],
+        },
     }
     if options is not None:
-        message["message"]["quick_replies"] = options
-
-    r = requests.post(FB_ENDPOINT,
-        params={"access_token": PAT},
-        data=json.dumps(message),
-        headers={'Content-type': 'application/json'}
-    )
-    if r.status_code != requests.codes.ok:
-        print r.text
+        payload["message"]["quick_replies"] = options
+    return call_send_api(payload)
 
 """
-Send image to receipient
-The picture will be uploaded to messenger
+send_image will upload an image to the messenger
 """
 def send_image(sender_id, image_url):
-    message = {
+    return call_send_api({
         'recipient': {
             'id': sender_id,
         },
@@ -263,24 +260,31 @@ def send_image(sender_id, image_url):
                 },
             },
         },
-    }
-    r = requests.post(FB_ENDPOINT,
-        params={"access_token": PAT},
-        data=json.dumps(message),
-        headers={'Content-type': 'application/json'}
-    )
-    if r.status_code != requests.codes.ok:
-        print r.image_url
+    })
 
+"""
+send_indicator will execute the action on the messenger
+https://developers.facebook.com/docs/messenger-platform/send-api-reference/sender-actions
+"""
 def send_indicator(sender_id, action):
-    message = {
+    call_send_api({
         'recipient': {
             'id': sender_id,
         },
         'sender_action': action,
-    }
-    requests.post(FB_ENDPOINT,
-        params={"access_token": PAT},
-        data=json.dumps(message),
-        headers={'Content-type': 'application/json'}
+    })
+
+"""
+call_send_api sends the payload to FB Messenger API
+"""
+def call_send_api(payload):
+    url = "%s?access_token=%s" % (
+        FB_ENDPOINT,
+        PAT,
+    )
+    print(url)
+    print(payload)
+    return requests.post(
+        url,
+        json=payload
     )

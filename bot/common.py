@@ -25,7 +25,7 @@ def send_message(sender_id, text, options=None):
         headers={'Content-type': 'application/json'}
     )
     if r.status_code != requests.codes.ok:
-        print r.text
+        print(r.text)
 
 """
 Send image to receipient
@@ -51,7 +51,7 @@ def send_image(sender_id, image_url):
         headers={'Content-type': 'application/json'}
     )
     if r.status_code != requests.codes.ok:
-        print r.image_url
+        print(r.image_url)
 
 def send_indicator(sender_id, action):
     message = {
