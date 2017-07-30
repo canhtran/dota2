@@ -7,9 +7,6 @@ import PlayerProfile
 
 app = Flask(__name__)
 
-# This needs to be filled with the Page Access Token that will be provided
-# by the Facebook App that will be created.
-
 @app.route('/', methods=['GET'])
 def handle_verification():
     verify_token = request.args.get('hub.verify_token')
@@ -57,7 +54,18 @@ def messaging_events(data):
 Process message from event (sender_id, message)
 """
 def receive_message(sender_id, message):
-    if not re.match('\d{5}', message.decode('utf-8')):
+    if 'STOPP_FB_CODE_404' in message.decode('utf-8'):
+        common.send_message(sender_id, "I hope that was helpful 🙃")
+        common.send_message(sender_id, "I'm happy to help again!")
+        return False
+
+    elif "details" in message.decode('utf-8'):
+        dota2bot_check_details(message, sender_id)
+
+    elif "recommendation" in message.decode('utf-8'):
+        dota2bot_do_recommendation(message, sender_id)
+
+    elif not re.match('\d{5}', message.decode('utf-8')):
         dota2bot_username(message, sender_id)
     else:
         account_ids = re.findall('\d+', message.decode('utf-8'))
@@ -113,6 +121,23 @@ User key in only one account_id
 """
 def dota2bot_single_id(account_id, sender_id):
     PlayerProfile.profile_generator(account_id, sender_id)
+
+
+"""
+
+"""
+def dota2bot_check_details(message, sender_id):
+    account_id = message.decode('utf-8').split('-')[0]
+    print(account_id)
+    PlayerProfile.profile_details(account_id=account_id, sender_id=sender_id)
+
+
+"""
+"""
+def dota2bot_do_recommendation(message, sender_id):
+    account_id = message.decode("utf-8").split('-')[0]
+    print(account_id)
+    PlayerProfile.players_recommendation(account_id, sender_id)
 
 if __name__ == '__main__':
     app.run(debug=True)
