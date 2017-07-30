@@ -25,7 +25,7 @@ def profile_generator(account_id, sender_id):
         winrate = round((wl["win"] / float(total_matches)) * 100,2)
         common.send_message(
             sender_id,
-            "Hmm... your winrate is %s" % winrate + "%. That's not too bad."
+            "Hmm... the winrate is %s" % winrate + "%. That's not too bad."
         )
 
         """Player statistics
@@ -39,7 +39,29 @@ def profile_generator(account_id, sender_id):
         for index, value in player_stats.items():
             stat_mess += "👉 %s: %s\n" % (index, value)
         common.send_message(sender_id, stat_mess)
-        common.send_message(sender_id, "That's the average number you got per match. Keep it up!")
+        common.send_message(sender_id, "That's the average number per match. Keep it up!")
+
+        player_heroes = get_player_heroes(account_id)
+        all_heroes = get_heroes_hash()
+
+        for i, hero in enumerate(player_heroes[:5]):
+            hero_ = all_heroes[int(hero.get("hero_id"))]
+            if i == 0:
+                mess = "%s played %d times with %s" % (
+                    name,
+                    hero.get("games"),
+                    hero_.get("localized_name"),
+                )
+            else:
+                mess = "%d times with %s" % (
+                    hero.get("games"),
+                    hero_.get("localized_name"),
+                )
+
+            common.send_message(sender_id, mess)
+
+        common.send_message(sender_id, "I hope that was helpful 🙃")
+        common.send_message(sender_id, "I'm happy to help again!")
     else:
         common.send_message(sender_id, "Are you kidding me? This account is invalid or private.")
 
