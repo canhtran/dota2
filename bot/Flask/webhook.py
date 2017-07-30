@@ -31,6 +31,7 @@ def handle_messages():
 
     for sender_id, message in messaging_events(body):
         print("Incoming from %s: %s" % (sender_id, message))
+        common.send_indicator(sender_id, "mark_seen")
         receive_message(sender_id, message)
         return "ok"
 
