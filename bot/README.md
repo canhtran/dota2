@@ -23,8 +23,7 @@ Based on the requirement, the ```dota2api``` is not supported with username sear
 ### Bot server
 At first I design the architect like this:
 
-![alt text][logo]
-[logo]: img/server-architect.jpg
+![alt text](https://github.com/canhtran/dota2/blob/master/bot/img/server-architect.jpg?raw=true)
 
 There are two servers: webhook server and recommendation engine.
 - Webhook is built for receive, processing messages, do simple statistics
