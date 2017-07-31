@@ -1,7 +1,7 @@
 ### Objective
 The objective is to write a Facebook Messenger bot in Python, which read username (account_id) of player and return some statistics.
 
-### Tech Slack
+### Tech Stack
 The tech slack that was used is:
 - ```AWS EC2``` for backend hosting. The free tier is more than enough for demo purpose.
 - ```Python``` is language of choice. The version that was used is 3.6
