@@ -1,6 +1,7 @@
 import common
 import pickle
 import numpy as np
+import pandas as pd
 
 """
 Generate player profile based on Account ID
@@ -89,10 +90,19 @@ Collect heroes and call recommendation engine
 def players_recommendation(account_id, sender_id):
     common.send_message(sender_id, "Let me check about his/her heroes...")
     player_heroes = get_player_heroes(account_id)
-    all_heroes = get_heroes_hash()
+    all_heroes = pd.read_csv("data/heroes.csv")
+    heroes = []
+    for idex, row in all_heroes.iterrows():
+        hero = {}
+        hero["id"] = row["id"]
+        hero["localized_name"] = row["localized_name"]
+        hero["main_role"] = row["main_role"]
+        heroes.append(hero)
+
+    heroes_hash = get_heroes_hash(heroes)
 
     for i, hero in enumerate(player_heroes[:5]):
-        hero_ = all_heroes[int(hero.get("hero_id"))]
+        hero_ = heroes_hash[int(hero.get("hero_id"))]
         if i == 0:
             mess = "He/she played %d times with %s" % (
                 hero.get("games"),
@@ -116,10 +126,20 @@ def players_recommendation(account_id, sender_id):
     clf = pickle.load(open("model/finalized_model.pkl", "rb" ))
     fv = np.array(model_input).reshape((1,-1))
     pred = clf.predict(fv)
+    position = all_roles[pred[0]]
     common.send_message(
         sender_id,
-        "Base on the profile, I think that he/she is suitable in %s position" % all_roles[pred[0]]
+        "Base on the profile, I think that he/she is suitable in %s position" % position
     )
+    common.send_message(sender_id, "Some of heroes I think you may consider: ")
+    df_rec = all_heroes[all_heroes['main_role'] == str(position)].sample(3)
+    mess = ''
+    dotafire = 'https://www.dotafire.com/dota-2/hero/'
+    for idex, row in df_rec.iterrows():
+        link = dotafire + str(row['localized_name']) + '-' + str(row['guide'])
+        mess += "👉 %s: %s\n" % (row['localized_name'], link)
+
+    common.send_message(sender_id, mess)
 
     common.send_message(sender_id, "I hope that was helpful 🙃")
     common.send_message(sender_id, "I'm happy to help again!")
@@ -163,9 +183,8 @@ def get_heroes():
 """
 Build a mapping <look up> table for heroes
 """
-def get_heroes_hash():
+def get_heroes_hash(all_heroes):
     h = {}
-    heroes = get_heroes()
-    for hero in heroes:
+    for hero in all_heroes:
         h[hero.get("id")] = hero
     return h
