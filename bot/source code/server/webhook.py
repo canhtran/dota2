@@ -124,7 +124,7 @@ def dota2bot_single_id(account_id, sender_id):
 
 
 """
-
+User key in details payload
 """
 def dota2bot_check_details(message, sender_id):
     account_id = message.decode('utf-8').split('-')[0]
@@ -133,6 +133,7 @@ def dota2bot_check_details(message, sender_id):
 
 
 """
+User key in recommendation payload
 """
 def dota2bot_do_recommendation(message, sender_id):
     account_id = message.decode("utf-8").split('-')[0]

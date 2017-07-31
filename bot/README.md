@@ -62,4 +62,4 @@ This chat is basic, it doesn't let user to "ask a question". That would probably
 
 Secondly, I would enhance the architect, separate the Recommendation engine and  plug-in database MySQL since MySQL is the most common RDMS. It works quite good with Flask SQLAlchemy. Also the asynchronous haven't considered in here. Right now, it keeps the connection between Messenger and API for the whole process (which take several seconds in the worst case). This may causing the loop, because if the messenger doesn't received 200 OK response after sometimes, it will continue POST the requests to our API.
 
-Finally, definitely about the recommendation, I don't have time to tunning the model so the accuracy is quite bad 59%. Features are not normalized yet. And In the future, I would use the matches database to predict the next hero that player should pick.
+Finally, definitely about the recommendation, I don't have time to tuning the model so the accuracy is quite bad 59%. Features are not normalized yet. And In the future, I would use the matches database to predict the next hero that player should pick.
