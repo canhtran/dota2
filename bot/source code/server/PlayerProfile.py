@@ -88,7 +88,7 @@ def profile_details(account_id, sender_id):
 Collect heroes and call recommendation engine
 """
 def players_recommendation(account_id, sender_id):
-    common.send_message(sender_id, "Let me check about his/her heroes...")
+    common.send_message(sender_id, "Wait a sec ah. I check about his/her play style...")
     player_heroes = get_player_heroes(account_id)
     all_heroes = pd.read_csv("data/heroes.csv")
     heroes = []
@@ -136,7 +136,7 @@ def players_recommendation(account_id, sender_id):
     mess = ''
     dotafire = 'https://www.dotafire.com/dota-2/hero/'
     for idex, row in df_rec.iterrows():
-        link = dotafire + str(row['localized_name']) + '-' + str(row['guide'])
+        link = dotafire + str(row['guide'])
         mess += "👉 %s: %s\n" % (row['localized_name'], link)
 
     common.send_message(sender_id, mess)
