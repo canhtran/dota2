@@ -64,3 +64,8 @@ This chat is basic, it doesn't let user to "ask a question". That would probably
 Secondly, I would enhance the architect, separate the Recommendation engine and  plug-in database MySQL since MySQL is the most common RDMS. It works quite good with Flask SQLAlchemy. Also the asynchronous haven't considered in here. Right now, it keeps the connection between Messenger and API for the whole process (which take several seconds in the worst case). This may causing the loop, because if the messenger doesn't received 200 OK response after a period of time, it will continue POST the requests to our API.
 
 Finally, definitely about the recommendation, I don't have time to tuning the model so the accuracy is quite bad 59%. Features are not normalized yet. In the future, I would use the matches database to predict the next hero that player should pick or ask a few questions to recommend heroes to players.
+
+### Bugs
+Some of the bugs may be happened due to the asynchronize of the architect.
+
+E.g If user key in a common username like "Test" or "Invoker". It tooks around 5s to query from opendota api and send back to webhook. Counting the time latency between Messenger and Webhook, total it tooks around 10s. Because the waiting time is long, facebook will send another POST request to webhook cause the duplicate in the bot answer 
