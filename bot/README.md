@@ -68,4 +68,5 @@ Finally, definitely about the recommendation, I don't have time to tuning the mo
 ### Bugs
 Some of the bugs may be happened due to the asynchronize of the architect.
 
-E.g If user key in a common username like "Test" or "Invoker". It tooks around 5s to query from opendota api and send back to webhook. Counting the time latency between Messenger and Webhook, total it tooks around 10s. Because the waiting time is long, facebook will send another POST request to webhook cause the duplicate in the bot answer 
+E.g If user key in a common username like "Test" or "Invoker". It tooks around 5s to query from opendota api and send back to webhook. Counting the time latency between Messenger and Webhook, total it tooks around 10s. Because the waiting time is long, facebook will send another POST request to webhook cause the duplicate in the bot answer. It may causing the infinitive loops. 
+To avoid this happen, I have to chance the architect, separate webhook server into 2 smaller server. One for webhook to server message, al the return message will post back to another api for handle
