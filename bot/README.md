@@ -1,3 +1,6 @@
+### Warning
+Currently, the opendota api had problem with their server, using a simple search query with common username like ```https://api.opendota.com/api/search?q=Hi``` will took very long time to recieve results. It causes infinite loop, please avoid to test with common username. Thanks  (The issue has been indentified and the solution is at the bugs section)
+
 ### Objective
 The objective is to write a Facebook Messenger bot in Python, which read username (account_id) of player and return some statistics.
 
@@ -68,4 +71,6 @@ Finally, definitely about the recommendation, I don't have time to tuning the mo
 ### Bugs
 Some of the bugs may be happened due to the asynchronize of the architect.
 
-E.g If user key in a common username like "Test" or "Invoker". It tooks around 5s to query from opendota api and send back to webhook. Counting the time latency between Messenger and Webhook, total it tooks around 10s. Because the waiting time is long, facebook will send another POST request to webhook cause the duplicate in the bot answer 
+E.g If user key in a common username like "Test" or "Invoker". It tooks around 5s to query from opendota api and send back to webhook. Counting the time latency between Messenger and Webhook, total it tooks around 10s. Because the waiting time is long, facebook will send another POST request to webhook cause the duplicate in the bot answer. It may causing the infinitive loops. 
+
+To avoid this happen, I have to change the architect, separate webhook server into 2 smaller server. One calls ```webhook_handle_service``` for webhook to handle the message, immediately reply 200Ok back to messenger bot. And another server api ```message_handle_api``` to receive message from webhook_handle_api and process with the message.
