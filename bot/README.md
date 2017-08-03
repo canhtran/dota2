@@ -1,5 +1,5 @@
 ### Warning
-Currently, the opendota api had problem with their server, using a simple search query with common username like ```https://api.opendota.com/api/search?q=Hi``` will took very long time to recieve results. It causes infinite loop, please avoid to test with common username. Thanks 
+Currently, the opendota api had problem with their server, using a simple search query with common username like ```https://api.opendota.com/api/search?q=Hi``` will took very long time to recieve results. It causes infinite loop, please avoid to test with common username. Thanks  (The issue has been indentified and the solution is at the bugs section)
 
 ### Objective
 The objective is to write a Facebook Messenger bot in Python, which read username (account_id) of player and return some statistics.
