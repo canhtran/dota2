@@ -53,7 +53,7 @@ But as the requirement, with only User Profile, I will "hack" the recommendation
 - Thirdly, With the data, I extract the features from profiles: ```kills, deaths, assists, last_hit, denies, xp_per_min, gold_per_min, kda```. All are the mean value.
 - Each player will have a position in a team, I get the top hero that he/she played, look up in the heroes mapping file and extract the main position of that player.
 - Due to the time constraint, I built a simple model using XGBClassifier with main_roles as the label and the features above.
-- Finally, with the position as result, I do a random look up in the heroes files to recommend heroes for player with the play styles from dotafire.
+- Finally, with the position as result, I applied the stochastic algorithm to recommend heroes for player with the play styles from dotafire.
 
 The hypothesis in here is, if a player is suggested to play in a fixed position, e.g support. He/she will tend to do random picking the heroes which belong to support roles.
 
