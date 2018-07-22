@@ -8,7 +8,8 @@ The tech stack that was used is:
 - ```Flask``` as the web development framework. It’s a very lightweight framework that’s perfect for small scale projects/microservices.
 - ```XGBoost``` for building model.
 - ```Gunicorn``` and ```Nginx``` for serve our python code (Flask is not safe for production) and web server in EC2
-- Worth to mention ```Let's Encrypt``` for config SSL on AWS EC2 with my custom domain
+- Worth to mention ```Let's Encrypt``` for config SSL on AWS EC2 with my custom domain.
+- ```Thread``` for asynchronous and multiprocessing
 
 ### Messenger bot
 I've never used this API. My experience with chat bot platform mostly in Slack and Telegram. I spent around 3 hours to check the doc and build simple echo bot.
@@ -52,7 +53,7 @@ But as the requirement, with only User Profile, I will "hack" the recommendation
 - Thirdly, With the data, I extract the features from profiles: ```kills, deaths, assists, last_hit, denies, xp_per_min, gold_per_min, kda```. All are the mean value.
 - Each player will have a position in a team, I get the top hero that he/she played, look up in the heroes mapping file and extract the main position of that player.
 - Due to the time constraint, I built a simple model using XGBClassifier with main_roles as the label and the features above.
-- Finally, with the position as result, I do a random look up in the heroes files to recommend heroes for player with the play styles from dotafire.
+- Finally, with the position as result, I applied the stochastic algorithm to recommend heroes for player with the play styles from dotafire.
 
 The hypothesis in here is, if a player is suggested to play in a fixed position, e.g support. He/she will tend to do random picking the heroes which belong to support roles.
 
@@ -64,3 +65,12 @@ This chat is basic, it doesn't let user to "ask a question". That would probably
 Secondly, I would enhance the architect, separate the Recommendation engine and  plug-in database MySQL since MySQL is the most common RDMS. It works quite good with Flask SQLAlchemy. Also the asynchronous haven't considered in here. Right now, it keeps the connection between Messenger and API for the whole process (which take several seconds in the worst case). This may causing the loop, because if the messenger doesn't received 200 OK response after a period of time, it will continue POST the requests to our API.
 
 Finally, definitely about the recommendation, I don't have time to tuning the model so the accuracy is quite bad 59%. Features are not normalized yet. In the future, I would use the matches database to predict the next hero that player should pick or ask a few questions to recommend heroes to players.
+
+### Bugs
+Some of the bugs may be happened due to the asynchronize of the architect.
+
+E.g If user key in a common username like "Test" or "Invoker". It tooks around 5s to query from opendota api and send back to webhook. Counting the time latency between Messenger and Webhook, total it tooks around 10s. Because the waiting time is long, facebook will send another POST request to webhook cause the duplicate in the bot answer. It may causing the infinitive loops. 
+
+To avoid this happens, I have to change the architect, separate webhook server into 2 smaller server. One calls ```webhook_handle_service``` for webhook to handle the message, immediately reply 200Ok back to messenger bot. And another server api ```message_handle_api``` to receive message from webhook_handle_api and process with the message. The mechanism can be like lambda invoke service.
+
+Updating: I have fixed the bug by using thread and parallel processing.

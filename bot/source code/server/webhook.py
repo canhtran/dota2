@@ -4,6 +4,7 @@ import config
 import re
 import common
 import PlayerProfile
+from threading import Thread
 
 app = Flask(__name__)
 
@@ -21,17 +22,20 @@ def handle_verification():
 
 @app.route('/', methods=['POST'])
 def handle_messages():
-    body = json.loads(request.get_data())
+    body = json.loads(request.get_data().decode('utf-8'))
 
     if body.get("object") != "page":
         return 'Noobs, GGWP !'
 
+    t = Thread(target=process_data, args=(body, ))
+    t.start()
+    return "ok"
+
+def process_data(body):
     for sender_id, message in messaging_events(body):
         print("Incoming from %s: %s" % (sender_id, message))
         common.send_indicator(sender_id, "mark_seen")
         receive_message(sender_id, message)
-        return "ok"
-
 """
 Generate tuples of (sender_id, message_text) from the
 provided payload.
